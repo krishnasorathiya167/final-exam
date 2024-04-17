@@ -1,11 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+    <link rel="stylesheet" href="style.css">
 <body>
-    
+
+    <a href="product.html"><h1>product page</h1></a>
+
+    <label>Product Name :<input type="text" id="name"></label> <br><br>
+    <label>Price :<input type="text" id="price"></label><br><br>
+    <label>Selling :<input type="text" id="selling"></label><br><br>
+    <label>discount :<input type="text" id="discount"></label><br><br>
+    <label>Rating :<input type="text" id="rating"></label><br><br>
+    <button onclick="submit()">Submit</button><br><br>
+
+    <div class="model" id="model">
+        <label>Product Name :<input type="text" id="viewname"></label> <br><br>
+    <label>Price :<input type="number" id="viewprice"></label><br><br>
+    <label>Selling :<input type="number" id="viewselling"></label><br><br>
+    <label>discount :<input type="number" id="viewdiscount"></label><br><br>
+    <label>Rating :<input type="number" id="viewrating"></label><br><br>
+    <input type="hidden" name="index" id="index" />
+    <button onclick="update()">save</button><br><br>
+    </div>
+
+    <table border="1" cellpadding="10px" cellspacing="0">
+        <thead>
+            <tr>
+                <th>productname</th>
+                <th>price</th>
+                <th>selling</th>
+                <th>discount</th>
+                <th>rating</th>
+                <th>Remove</th>
+                <th>update</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+    </table>
+
+    <script>
+
+        let list = JSON.parse(localStorage.getItem("list")) || [];
+
+        let loaddata = () => {
+            let tbody = document.getElementById("tbody");
+            list.map((val, ind) => {
+                let tr = document.createElement("tr");
+                tr.innerHTML = `<td>${val.name}</td>
+                             <td>${val.price}</td>
+                             <td>${val.selling}</td>
+                             <td>${val.discount}</td>
+                             <td>${val.rating}</td>
+                             <td><button onclick="remove(${ind})" >remove</button></td>
+                             <td><button onclick = "viewData(${ind})">Update</button></td>`
+                tbody.appendChild(tr);
+
+            })
+        }
+        loaddata()
+
+        let submit = () => {
+            let data = {
+                name: document.getElementById("name").value,
+                price: document.getElementById("price").value,
+                selling: document.getElementById("selling").value,
+                discount: document.getElementById("discount").value,
+                rating: document.getElementById("rating").value
+            }
+            console.log(data);
+            list.push(data);
+            localStorage.setItem("list", JSON.stringify(list));
+            location.reload()
+        }
+
+        let remove = (index) => {
+            let result = list[index];
+
+            let newlist = list.filter((val) => val.name !== result.name)
+            localStorage.setItem("list", JSON.stringify(newlist))
+            location.reload()
+        }
+
+        let viewData = (index)=>{
+            let model = document.getElementById("model");
+            model.style.display = "block"
+            let result = list[index];
+            console.log(result);
+
+            document.getElementById("viewname").value = result.name;
+            document.getElementById("viewprice").value = result.price;
+            document.getElementById("viewselling").value = result.selling;
+            document.getElementById("viewdiscount").value = result.discount;
+            document.getElementById("viewrating").value = result.rating;
+            document.getElementById("index").value =index;
+        }
+
+        let update = ()=>{
+            let index = document.getElementById("index").value;
+            let name = document.getElementById("viewname").value;
+            let price = document.getElementById("viewprice").value;
+            let selling = document.getElementById("viewselling").value;
+            let discount = document.getElementById("viewdiscount").value;
+            let rating = document.getElementById("viewrating").value;
+
+            let data={
+                name,
+                price,
+                selling,
+                discount,
+                rating,
+            }
+            console.log(data);
+            list.splice(index,1,data);
+            localStorage.setItem("list",JSON.stringify(list));
+            location.reload()
+        }
+    </script>
+
 </body>
+
 </html>
