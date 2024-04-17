@@ -8,3 +8,12 @@
     left: 40%;
     display: none;
 }
+card{
+    margin: 10px;
+}
+
+.main{
+    border: 1px solid black;
+    padding: 20px;
+    border-radius: 5px;
+}

@@ -18,6 +18,7 @@
     <div class="container">
         <div class="row">
             <div class="carddata d-flex flex-wrap" id="carddata">
+                
             </div>
         </div>
     </div>
@@ -30,11 +31,13 @@
             let carddata = document.getElementById("carddata");
             list.map((val,ind)=>{
                 let card = document.createElement("card");
-            card.innerHTML= ` <h2>Product Name : ${val.name}</h2>
+            card.innerHTML= `<div class="main">
+                              <h3>Name : ${val.name}</h3>
                               <h4 class="">Price : ${val.price}</h4>
                               <p class="fs-5">Selling : ${val.selling}</p>
                               <p class="fs-5">Discount : ${val.discount}</p>
-                              <p class="fs-5">Rating : ${val.rating}</p>` 
+                              <p class="fs-5">Rating : ${val.rating}</p>
+                </div> ` 
             carddata.appendChild(card)
 
             })
